@@ -5,8 +5,8 @@ import { IconBrandProducthunt, IconDashboard, IconGrid4, IconNotes, IconPerson, 
 
 export function Aside() {
     return (
-        <ul className='grid items-center px-4 text-sm font-medium lg:px-4'>
-            <AsideLink active={route().current('admin.dahsboard.index')} href={route('admin.dashboard.index')}>
+        <ul className='grid items-center gap-1 px-4 text-md font-medium lg:px-4'>
+            <AsideLink active={route().current('admin.dashboard.index')} href={route('admin.dashboard.index')}>
                 <IconDashboard />
                 <span>Dashboard</span>
             </AsideLink>
@@ -36,8 +36,8 @@ export function AsideLink({ className, active, ...props }: AsideLinkProps) {
         <li className='-mx-1'>
             <Link
                 className={cn(
-                    active ? 'text-foreground font-bold' : 'text-muted-foreground',
-                    'flex items-center [&>svg]:size-4 [&>svg]:stroke-[1.25] [&>svg]:mr-2 [&>svg]:-ml-1 hover:bg-accent/50 tracking-tight text-base, hover:text-foreground px-4 py-2 rounded-md'
+                    active ? 'font-extrabold bg-slate-300' : '',
+                    'flex items-center [&>svg]:size-4 [&>svg]:stroke-[1.25] [&>svg]:mr-2 [&>svg]:-ml-1 hover:bg-slate-300 tracking-tight text-base, hover:text-foreground px-4 py-2 rounded-md'
                 )}
                 {...props}
             />

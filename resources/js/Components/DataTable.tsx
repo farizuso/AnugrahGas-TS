@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
+  FilterFn,
   SortingState,
   VisibilityState,
   flexRender,
@@ -11,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown } from "lucide-react";
+import { ArrowUpDown, ChevronDown, SearchIcon } from "lucide-react";
 
 import { Button } from "@/Components/ui/button";
 import { Checkbox } from "@/Components/ui/checkbox";
@@ -30,12 +31,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
-
-// Definisi tipe untuk Props DataTable
+import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 interface DataTableProps<TData> {
   data: TData[]; // Data yang akan ditampilkan
   columns: ColumnDef<TData>[]; // Kolom yang akan dirender
 }
+declare module "@tanstack/react-table" {
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>;
+  }
+  interface FilterMeta {
+    itemRank: RankingInfo;
+  }
+}
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  const itemRank = rankItem(row.getValue(columnId), value);
+  addMeta({
+    itemRank,
+  });
+  return itemRank.passed;
+};
+
 
 // Komponen reusable DataTable
 export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
@@ -50,6 +66,9 @@ export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
   const table = useReactTable({
     data,
     columns,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -58,27 +77,26 @@ export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: "fuzzy",
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
   });
 
   return (
     <div className="w-full">
-            {/* Input untuk filtering */}
-            <div className="flex items-center py-4">
-                {/* <TambahData/> */}
-                <Input
-                    placeholder="Filter No Botol"
-                    value={(table.getColumn("no_botol")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("no_botol")?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-40"
-                />
+      {/* Input untuk filtering */}
+      <div className="flex items-center py-4">
+        {/* <TambahData/> */}
+        <DebouncedInput
+          value={globalFilter ?? ""}
+          onChange={(value) => setGlobalFilter(String(value))}
+        />
         {/* Dropdown untuk mengatur visibilitas kolom */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -168,6 +186,46 @@ export function DataTable<TData>({ data, columns }: DataTableProps<TData>) {
           </Button>
         </div>
       </div>
+    </div>
+  );
+}
+function DebouncedInput({
+  value: initialValue,
+  onChange,
+  debounce = 0,
+  ...props
+}: {
+  value: string | number;
+  onChange: (value: string | number) => void;
+  debounce?: number;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">) {
+  const [value, setValue] = React.useState(initialValue);
+
+  React.useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChange(value);
+    }, debounce);
+
+    return () => clearTimeout(timeout);
+  }, [value]);
+
+  return (
+    <div className="relative">
+      <Input
+        {...props}
+        placeholder="Filter..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="max-w-sm pl-8 bg-background"
+      />
+      <SearchIcon
+        size={20}
+        className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+      />
     </div>
   );
 }
