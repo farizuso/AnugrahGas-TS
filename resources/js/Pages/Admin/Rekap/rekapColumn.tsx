@@ -44,6 +44,7 @@ export const rekapColumns: ColumnDef<Rekap>[] = [
         cell: ({ row }) => (
             <div className="capitalize">{row.original.produk.no_botol}</div>
         ),
+        accessorFn: (row) => row.produk.no_botol, // Akses nilai nested untuk fuzzy filtering
     },
     {
         accessorKey: "alamat",
