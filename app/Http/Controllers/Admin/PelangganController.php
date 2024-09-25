@@ -15,7 +15,7 @@ class PelangganController extends Controller
     public function index()
     {
         $posts = Pelanggan::all();
-        return Inertia::render('Admin/Pelanggan/Index',[
+        return Inertia::render('Admin/Pelanggan/Index', [
             'posts' => $posts
         ]);
     }
@@ -28,7 +28,7 @@ class PelangganController extends Controller
     {
         //
         $posts = Pelanggan::all();
-        return Inertia::render('Admin/Pelanggan/Index',[
+        return Inertia::render('Admin/Pelanggan/Index', [
             'posts' => $posts
         ]);
     }
@@ -67,16 +67,22 @@ class PelangganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Pelanggan $pelanggan)
+    public function update(Request $request, $id)
     {
-        //
-        $pelanggan->update([
-            'nama_pelanggan' => $request->nama_pelanggan,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp
+        $validated = $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:20',
         ]);
+
+        $pelanggan = Pelanggan::findOrFail($id);
+
+        $pelanggan->update($validated);
+
         return redirect()->route('admin.pelanggan.index')->with('success', 'Data Pelanggan berhasil diubah');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
