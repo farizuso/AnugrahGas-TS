@@ -61,7 +61,7 @@ class ProductController extends Controller
     public function create()
     {
         $posts = Produk::all();
-        return Inertia::render('Admin/Produk/TabsDemo',[
+        return Inertia::render('Admin/Produk/Index',[
             'posts' => $posts
         ]);
     }

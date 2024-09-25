@@ -23,4 +23,9 @@ class Rekap extends Model
     {
         return $this->belongsTo(Produk::class);
     }
+
+    public function pelanggans()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
 }

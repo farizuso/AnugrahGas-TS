@@ -12,25 +12,31 @@ class ProdukSeeder extends Seeder
      */
     public function run(): void
     {
-        $produks = [
-            [
-                'id' => 1,
-                'no_botol' => '001',
-                'nama_produk' => "botol miras",
-                'harga' => '10000',
-                'stok' => '10'
-            ],
-            [
-                'id' => 2,
-                'no_botol' => '002',
-                'nama_produk' => "botol arak",
-                'harga' => '20000',
-                'stok' => '20'
-            ]
+        // Define a base name for the products
+        $baseNames = [
+            "botol miras",
+            "botol arak",
+            "botol soda",
+            "botol air",
+            "botol jus",
+            "botol teh",
+            "botol kopi",
+            "botol anggur",
+            "botol whisky",
+            "botol vodka",
+        ];
+
+        // Generate 50 product entries
+        for ($i = 1; $i <= 50; $i++) {
+            $produk = [
+                'id' => $i,
+                'no_botol' => str_pad($i, 3, '0', STR_PAD_LEFT), // Pads the number with leading zeros
+                'nama_produk' => $baseNames[array_rand($baseNames)], // Randomly selects a product name
+                'harga' => rand(10000, 50000), // Generates a random price between 10,000 and 50,000
+                'stok' => rand(1, 100) // Generates a random stock value between 1 and 100
             ];
 
-            foreach ($produks as $produk){
-                \App\Models\Produk::create($produk);
-            }
+            \App\Models\Produk::create($produk);
+        }
     }
 }

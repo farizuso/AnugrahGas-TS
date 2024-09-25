@@ -22,6 +22,13 @@ export interface Produk{
     deskripsi: string;
 }
 
+export interface Pelanggan{
+    id: number;
+    nama_pelanggan: string;
+    alamat: string;
+    no_hp: string;
+}
+
 export interface Rekap{
     id: number;
     id_botol: number;
@@ -45,3 +52,20 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     };
     produks : Produk[]
 };
+
+export interface DebouncedWindowSizeOptions {
+    initialWidth?: number
+    initialHeight?: number
+    wait?: number
+    leading?: boolean
+  }
+  export declare const useWindowSize: (
+    options?: DebouncedWindowSizeOptions
+  ) => readonly [number, number]
+  export declare const useWindowHeight: (
+    options?: Omit<DebouncedWindowSizeOptions, 'initialWidth'>
+  ) => number
+  export declare const useWindowWidth: (
+    options?: Omit<DebouncedWindowSizeOptions, 'initialHeight'>
+  ) => number
+  

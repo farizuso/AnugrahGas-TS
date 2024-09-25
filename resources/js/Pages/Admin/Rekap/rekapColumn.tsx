@@ -72,14 +72,14 @@ export const rekapColumns: ColumnDef<Rekap>[] = [
         },
     },
     {
-        accessorKey: "tgl_masuk_pabrik",
+        accessorKey: "tgl_kembali",
         header: ({ column }) => {
             return (
                 <Button
                     variant="grey"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Tgl. Pabrik
+                    Tgl. Kembali
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
@@ -90,7 +90,7 @@ export const rekapColumns: ColumnDef<Rekap>[] = [
         },
     },
     {
-        accessorKey: "tgl_kembali",
+        accessorKey: "tgl_pabrik",
         header: ({ column }) => {
             return (
                 <Button
