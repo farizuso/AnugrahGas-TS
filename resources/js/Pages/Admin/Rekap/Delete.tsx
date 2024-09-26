@@ -33,7 +33,7 @@ const Deleterkp = ({rekapdelete}:DeleteRekap) => {
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="red">
+                    <Button size={'sm'} variant="outline_red">
                         <FaTrash />
                     </Button>
                 </AlertDialogTrigger>

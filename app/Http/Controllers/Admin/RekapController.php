@@ -6,29 +6,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Rekap;
+use Illuminate\Support\Facades\Log;
 
 class RekapController extends Controller
 {
     public function index()
     {
         // Mendapatkan data Rekap dengan relasi produk
-        $posts = Rekap::with('produk')->get();
+        $posts = Rekap::with('produk', 'pelanggan')->get();
         return Inertia::render('Admin/Rekap/Index', [
             'posts' => $posts
         ]);
     }
 
     public function store(Request $request)
-    {
+{
+    try {
         // Validasi input
         $data = $request->validate([
-            'nama_pelanggan' => 'required',
-            'alamat' => 'required',
             'tgl_keluar' => 'required|date',
             'tgl_kembali' => 'required|date',
             'tgl_masuk_pabrik' => 'required|date',
             'keterangan' => 'required',
-            'produk_id' => 'required|exists:produks,id' // Mengasumsikan produk_id mengacu ke tabel 'produks'
+            'produk_id' => 'required|exists:produks,id',
+            'pelanggan_id' => 'required|exists:pelanggans,id',
         ]);
 
         // Membuat Rekap baru
@@ -36,19 +37,28 @@ class RekapController extends Controller
 
         // Redirect dengan pesan sukses
         return redirect()->route('admin.rekap.index')->with('success', 'Data Rekap berhasil ditambahkan');
-    }
 
-    public function update(Request $request, Rekap $rekap)
-    {
+    } catch (\Exception $e) {
+        // Log the error if necessary
+        Log::error($e->getMessage());
+
+        // Redirect back with error message
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage());
+    }
+}
+
+
+public function update(Request $request, Rekap $rekap)
+{
+    try {
         // Validasi input
         $data = $request->validate([
-            'nama_pelanggan' => 'required',
-            'alamat' => 'required',
             'tgl_keluar' => 'required|date',
             'tgl_kembali' => 'required|date',
             'tgl_masuk_pabrik' => 'required|date',
             'keterangan' => 'required',
-            'produk_id' => 'required|exists:produks,id' // Pastikan produk_id valid
+            'produk_id' => 'required|exists:produks,id',
+            'pelanggan_id' => 'required|exists:pelanggans,id',
         ]);
 
         // Update Rekap yang ada
@@ -56,7 +66,15 @@ class RekapController extends Controller
 
         // Redirect dengan pesan sukses
         return redirect()->route('admin.rekap.index')->with('success', 'Data Rekap berhasil diubah');
+    } catch (\Exception $e) {
+        // Log the error if necessary
+        Log::error($e->getMessage());
+
+        // Redirect back with error message
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan data: ' . $e->getMessage());
     }
+}
+
 
     public function destroy(Rekap $rekap)
     {

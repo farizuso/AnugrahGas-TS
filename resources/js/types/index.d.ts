@@ -17,6 +17,7 @@ export interface Produk{
     id: number;
     no_botol: string;
     nama_produk: string;
+    simbol: string;
     harga: string;
     stok: string;
     deskripsi: string;
@@ -39,6 +40,7 @@ export interface Rekap{
     tgl_masuk_pabrik: Date;
     keterangan: string;
     produk : Produk
+    pelanggan : Pelanggan
 }
 
 
@@ -51,6 +53,7 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
         error: string;
     };
     produks : Produk[]
+    pelanggans : Pelanggan[]
 };
 
 export interface DebouncedWindowSizeOptions {

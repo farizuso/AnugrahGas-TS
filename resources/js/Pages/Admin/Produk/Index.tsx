@@ -33,6 +33,7 @@ const TabsDemo = ({ posts }: ProdukProps) => {
     const { delete: destroy, data, setData, post, processing, errors, reset } = useForm({
         no_botol: "",
         nama_produk: "",
+        simbol: "",
         harga: "",
         stok: "",
     });
@@ -89,6 +90,16 @@ const TabsDemo = ({ posts }: ProdukProps) => {
                                         name="nama_produk"
                                         onChange={(e) => setData("nama_produk", e.target.value)}
                                         value={data.nama_produk}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label htmlFor="new">Simbol</Label>
+                                    <Input
+                                        id="new"
+                                        type="text"
+                                        name="simbol"
+                                        onChange={(e) => setData("simbol", e.target.value)}
+                                        value={data.simbol}
                                     />
                                 </div>
                                 <div className="space-y-1">

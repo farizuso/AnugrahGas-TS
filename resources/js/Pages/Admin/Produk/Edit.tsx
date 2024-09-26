@@ -25,6 +25,7 @@ const Edit = ({ produkedit }: EditProduk) => {
     const { put, data, setData, post, processing, errors, reset } = useForm({
         no_botol: produkedit.no_botol,
         nama_produk: produkedit.nama_produk,
+        simbol: produkedit.simbol,
         stok: produkedit.stok,
         harga: produkedit.harga
     });
@@ -34,6 +35,7 @@ const Edit = ({ produkedit }: EditProduk) => {
             ...data,
             no_botol: produkedit.no_botol,
             nama_produk: produkedit.nama_produk,
+            simbol: produkedit.simbol,
             stok: produkedit.stok,
             harga: produkedit.harga
         })
@@ -47,7 +49,8 @@ const Edit = ({ produkedit }: EditProduk) => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button
-                    variant="blue"
+                    size= "sm"
+                    variant="outline_blue"
                     onClick={() => setOpen(true)}
                 >
                     <BsPencilSquare />
@@ -87,6 +90,20 @@ const Edit = ({ produkedit }: EditProduk) => {
                             value={data.nama_produk}
                             onChange={(e) => setData("nama_produk", e.target.value)}
                             placeholder="masukkan nama produk"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                            Simbol
+                        </Label>
+                        <Input
+                            id="simbol"
+                            // defaultValue="Pedro Duarte"
+                            className="col-span-3"
+                            name="simbol"
+                            value={data.simbol}
+                            onChange={(e) => setData("simbol", e.target.value)}
+                            placeholder="masukkan simbol"
                         />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">

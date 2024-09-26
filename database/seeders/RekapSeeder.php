@@ -16,23 +16,21 @@ class RekapSeeder extends Seeder
         $rekaps = [
             [
                 'id' => 1,
-                'nama_pelanggan' => "idok",
-                'alamat' => "jl krembangan",
                 'tgl_keluar' => Carbon::now(),
                 'tgl_kembali' => Carbon::now(),
                 'tgl_masuk_pabrik' => Carbon::now(),
                 'keterangan' => "keluar pabrik",
                 'produk_id' => 1,
+                'pelanggan_id' => 1,
             ],
             [
                 'id' => 2,
-                'nama_pelanggan' => "peri",
-                'alamat' => "jl demak",
                 'tgl_keluar' => Carbon::now(),
                 'tgl_kembali' => Carbon::now(),
                 'tgl_masuk_pabrik' => Carbon::now(),
                 'keterangan' => "masuk pabrik",
                 'produk_id' => 2,
+                'pelanggan_id' => 2,
             ]
             ];
 

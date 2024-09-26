@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('rekaps', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pelanggan');
-            $table->string('alamat');
             $table->date('tgl_keluar');    
             $table->date('tgl_kembali');
             $table->date('tgl_masuk_pabrik');
             $table->string('keterangan');
             $table->foreignId('produk_id');
+            $table->foreignId('pelanggan_id');
             $table->timestamps();
         });
     }

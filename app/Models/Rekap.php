@@ -10,13 +10,12 @@ class Rekap extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_pelanggan',
-        'alamat',
         'tgl_keluar',
         'tgl_kembali',
         'tgl_masuk_pabrik',
         'keterangan',
         'produk_id',
+        'pelanggan_id',
     ];
 
     public function produk()
@@ -24,7 +23,7 @@ class Rekap extends Model
         return $this->belongsTo(Produk::class);
     }
 
-    public function pelanggans()
+    public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);
     }

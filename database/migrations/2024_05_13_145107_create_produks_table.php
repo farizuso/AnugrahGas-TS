@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_botol');
             $table->string('nama_produk');
+            $table->string('simbol');
             $table->integer('harga');
             $table->integer('stok');
             $table->timestamps();

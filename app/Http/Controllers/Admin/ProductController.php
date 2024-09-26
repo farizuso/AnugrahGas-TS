@@ -28,6 +28,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'no_botol' => 'required',
             'nama_produk' => 'required',
+            'simbol' => 'required',
             'harga' => 'required',
             'stok' => 'required',
         ]);
@@ -52,6 +53,7 @@ class ProductController extends Controller
         $produk->update([
             'no_botol' => $request->no_botol,
             'nama_produk' => $request->nama_produk,
+            'simbol' => $request->simbol,
             'stok' => $request->stok,
             'harga' =>$request->harga
         ]);

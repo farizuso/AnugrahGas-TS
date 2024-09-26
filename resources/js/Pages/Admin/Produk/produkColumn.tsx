@@ -39,6 +39,7 @@ export const produkColumns: ColumnDef<Produk>[] = [
     cell: ({ row }) => (
         <div className="capitalize">{row.getValue("no_botol")}</div>
     ),
+    
 },
 {
     accessorKey: "nama_produk",
@@ -53,7 +54,22 @@ export const produkColumns: ColumnDef<Produk>[] = [
             </Button>
         )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("nama_produk")}</div>,
+    cell: ({ row }) => <div className="capitalize">{row.getValue("nama_produk")}</div>,
+},
+{
+    accessorKey: "simbol",
+    header: ({ column }) => {
+        return (
+            <Button
+                variant="grey"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Simbol
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        )
+    },
+    cell: ({ row }) => <div className="capitalize">{row.getValue("simbol")}</div>,
 },
 {
     accessorKey: "stok",

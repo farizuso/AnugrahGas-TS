@@ -21,8 +21,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             ProdukSeeder::class,
+            PelangganSeeder::class,
             RekapSeeder::class,
             AdminSeeder::class
+            
         ]);
     }
 }

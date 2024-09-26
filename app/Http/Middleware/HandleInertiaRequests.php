@@ -40,6 +40,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
             ],
             'produks' => fn () => Produk::all(),
+            'pelanggans' => fn () => \App\Models\Pelanggan::all(),
         ];
     }
 }
