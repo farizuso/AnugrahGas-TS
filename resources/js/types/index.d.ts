@@ -32,9 +32,6 @@ export interface Pelanggan{
 
 export interface Rekap{
     id: number;
-    id_botol: number;
-    nama_pelanggan: string;
-    alamat: string;
     tgl_keluar: Date;
     tgl_kembali: Date;
     tgl_masuk_pabrik: Date;

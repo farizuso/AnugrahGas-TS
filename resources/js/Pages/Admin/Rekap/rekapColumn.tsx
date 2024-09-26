@@ -98,7 +98,7 @@ export const rekapColumns: ColumnDef<Rekap>[] = [
             );
         },
         cell: ({ row }) => {
-            const date = new Date(row.original.tgl_masuk_pabrik);
+            const date = new Date(row.original.tgl_kembali);
             return (
                 <div className="lowercase">
                     {date.toISOString().split("T")[0]}
